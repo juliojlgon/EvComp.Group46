@@ -19,7 +19,7 @@ public class Player46 implements ContestSubmission
 
 	Random rnd_;
 	ContestEvaluation evaluation_;
-    private int evaluations_limit_;
+	private int evaluations_limit_;
 	private int island_count = 4;
 	private int population_size = 100;
 	private int epoch_length = 20;
@@ -29,7 +29,6 @@ public class Player46 implements ContestSubmission
 	}
 
 	public static void main(String args[]) throws IOException {
-		System.out.println("HOLO");
 		ProcessBuilder term = new ProcessBuilder("/bin/bash");
 		Process p = term.start();
 
@@ -46,7 +45,7 @@ public class Player46 implements ContestSubmission
 		logHeader.add("AverageScore");
 		log.AddRow(logHeader);
 
-		String function = "SchaffersEvaluation";
+		String function = "BentCigarFunction";
 		String output;
 
 		for (double mutationChance = 0.85; mutationChance <= 0.96; mutationChance += 0.05) {
@@ -56,11 +55,15 @@ public class Player46 implements ContestSubmission
 					{
 						double avgScore = 0;
 						for (int run = 0; run < number_of_runs; run++) {
-							String command = String.format("java -Djava.library.path=~/files -Dmc=%f -Dcc=%f -Dts=%d -Dlr=%f -Dfile.encoding=UTF-8 -jar /root/UvA/EC/EvComp.Group46/files/testrun.jar -submission=main.Player46 -evaluation=%s -nosec -seed=%d",
+							String currentDir = System.getProperty("user.dir");
+
+							String command = String.format("java -Djava.library.path=%s/files -Dmc=%f -Dcc=%f -Dts=%d -Dlr=%f -Dfile.encoding=UTF-8 -jar %s/files/testrun.jar -submission=main.Player46 -evaluation=%s -nosec -seed=%d",
+									currentDir,
 									mutationChance,
 									crossoverChance,
 									tournamentSize,
 									learningRate,
+									currentDir,
 									function,
 									run);
 
@@ -112,22 +115,22 @@ public class Player46 implements ContestSubmission
 
 		// Get evaluation properties
 		Properties props = evaluation.getProperties();
-        // Get evaluation limit
-        evaluations_limit_ = Integer.parseInt(props.getProperty("Evaluations"));
+		// Get evaluation limit
+		evaluations_limit_ = Integer.parseInt(props.getProperty("Evaluations"));
 		// Property keys depend on specific evaluation
 		// E.g. double param = Double.parseDouble(props.getProperty("property_name"));
-        boolean isMultimodal = Boolean.parseBoolean(props.getProperty("Multimodal"));
-        boolean hasStructure = Boolean.parseBoolean(props.getProperty("Regular"));
-        boolean isSeparable = Boolean.parseBoolean(props.getProperty("Separable"));
+		boolean isMultimodal = Boolean.parseBoolean(props.getProperty("Multimodal"));
+		boolean hasStructure = Boolean.parseBoolean(props.getProperty("Regular"));
+		boolean isSeparable = Boolean.parseBoolean(props.getProperty("Separable"));
 
 		// Do sth with property values, e.g. specify relevant settings of your algorithm
-        if(isMultimodal){
-            // Do sth
-        }else{
-            // Do sth else
-        }
-    }
-    
+		if(isMultimodal){
+			// Do sth
+		}else{
+			// Do sth else
+		}
+	}
+
 	public void run()
 	{
 		SetRandom();
@@ -143,9 +146,9 @@ public class Player46 implements ContestSubmission
 		int epochs = 1;
 
 		LOOP:
-        while(true)
-        {
-            while(epochs < epoch_length)
+		while(true)
+		{
+			while(epochs < epoch_length)
 			{
 				for (int island = 0; island < island_count; island++) {
 					try{
@@ -168,9 +171,9 @@ public class Player46 implements ContestSubmission
 	private IslandParameters GetIslandParameters()
 	{
 		int tournamentSize = Integer.parseInt(System.getProperty(("ts")));
-		double crossoverChance = Double.parseDouble(System.getProperty(("cc")));
-		double mutationChance = Double.parseDouble(System.getProperty("mc"));
-		double learningRate = Double.parseDouble(System.getProperty("lr"));
+		double crossoverChance = Double.valueOf(System.getProperty(("cc")));
+		double mutationChance = Double.valueOf(System.getProperty("mc"));
+		double learningRate = Double.valueOf(System.getProperty("lr"));
 		int elites = 1;
 
 		return new IslandParameters(tournamentSize, mutationChance, elites, crossoverChance, learningRate);

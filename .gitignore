@@ -69,8 +69,9 @@ fabric.properties
 !KatsuuraEvaluation.class
 !SchaffersEvaluation.class
 !SphereEvaluation.class
-!contest.jar
-!testrun.jar
+!files/contest.jar
+!files/testrun.jar
+!files/opencsv-4.2.jar
 
 # Log file
 *.log

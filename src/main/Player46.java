@@ -45,24 +45,20 @@ public class Player46 implements ContestSubmission
 		logHeader.add("AverageScore");
 		log.AddRow(logHeader);
 
-		String function = "BentCigarFunction";
+		String function = "SchaffersEvaluation";
 		String output;
 
-		for (double mutationChance = 0.85; mutationChance <= 0.96; mutationChance += 0.05) {
-			for (double crossoverChance = 0.65; crossoverChance <= 0.76; crossoverChance += 0.05)
-				for (int tournamentSize = 2; tournamentSize < 3; tournamentSize += 1)
-					for (double learningRate = 0.45; learningRate <= 0.61; learningRate += 0.05)
-					{
+		//for (double mutationChance = 0.85; mutationChance <= 0.96; mutationChance += 0.05) {
+		//	for (double crossoverChance = 0.65; crossoverChance <= 0.76; crossoverChance += 0.05)
+		//		for (int tournamentSize = 2; tournamentSize < 3; tournamentSize += 1)
+		//			for (double learningRate = 0.45; learningRate <= 0.61; learningRate += 0.05)
+		//			{
 						double avgScore = 0;
 						for (int run = 0; run < number_of_runs; run++) {
 							String currentDir = System.getProperty("user.dir");
 
-							String command = String.format("java -Djava.library.path=%s/files -Dmc=%f -Dcc=%f -Dts=%d -Dlr=%f -Dfile.encoding=UTF-8 -jar %s/files/testrun.jar -submission=main.Player46 -evaluation=%s -nosec -seed=%d",
+							String command = String.format("java -Djava.library.path=%s/files -Dfile.encoding=UTF-8 -jar %s/files/testrun.jar -submission=main.Player46 -evaluation=%s -nosec -seed=%d",
 									currentDir,
-									mutationChance,
-									crossoverChance,
-									tournamentSize,
-									learningRate,
 									currentDir,
 									function,
 									run);
@@ -84,14 +80,13 @@ public class Player46 implements ContestSubmission
 						}
 
 						List<String> result = new ArrayList<>();
-						result.add(Double.toString(mutationChance));
-						result.add(Double.toString(crossoverChance));
-						result.add(Double.toString(learningRate));
+						//result.add(Double.toString(mutationChance));
+						//result.add(Double.toString(crossoverChance));
+						//result.add(Double.toString(learningRate));
 						result.add(Double.toString(avgScore / number_of_runs));
 						log.AddRow(result);
 						log.Print(result);
-					}
-		}
+					//}
 
 		processInput.write("exit");
 		processInput.newLine();
@@ -99,7 +94,7 @@ public class Player46 implements ContestSubmission
 
 		processInput.close();
 		processOutput.close();
-		log.WriteLog();
+		//log.WriteLog();
 	}
 
 	public void setSeed(long seed)
@@ -134,7 +129,7 @@ public class Player46 implements ContestSubmission
 	public void run()
 	{
 		SetRandom();
-		IslandParameters islandParameters = GetIslandParameters();
+		IslandParameters islandParameters = IslandParameters.GetBestIsland();//GetIslandParameters();
 		Logger islandLog = new Logger("IslandEvolution" + sdf.format(new Timestamp(System.currentTimeMillis())));
 
 		Population population = Population

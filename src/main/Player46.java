@@ -14,7 +14,7 @@ import java.util.Random;
 public class Player46 implements ContestSubmission
 {
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
-	private static final int number_of_runs = 42;
+	private static final int number_of_runs = 100;
 	private static final boolean WithLogging = false;
 
 	Random rnd_;
@@ -37,11 +37,10 @@ public class Player46 implements ContestSubmission
 		BufferedReader processOutput = new BufferedReader(isr);
 		BufferedWriter processInput = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
 
-		Logger log = new Logger("MigrationSweep");
+		Logger log = new Logger("AdaptiveMigration");
 		List<String> logHeader = new ArrayList<>();
-		logHeader.add("MigrationPolicy");
-		logHeader.add("MigrantCount");
-		logHeader.add("AvgScore");
+		logHeader.add("RunNumber.Seed");
+		logHeader.add("Score");
 		log.AddRow(logHeader);
 
 		String function = "SchaffersEvaluation";

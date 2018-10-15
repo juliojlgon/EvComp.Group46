@@ -1,7 +1,6 @@
 package main;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -11,10 +10,12 @@ public class Genotype {
 
     public double[] Values;
     public double[] MutationStepSize;
+    public double[] MigrationPreference;
 
-    public Genotype(double[] values, double[] mutationSizes){
+    public Genotype(double[] values, double[] mutationSizes, double[] migrationPreference){
         this.Values = Bounded(values);
         this.MutationStepSize = mutationSizes;
+        this.MigrationPreference = migrationPreference;
     }
 
     public static void SetRandom(Random rnd_)
@@ -43,13 +44,14 @@ public class Genotype {
     public static Genotype CreateRandom() {
         double[] values = new double[GenotypeLength];
         double[] stepSize = new double[GenotypeLength];
+        double[] migrationPreference = new double[]{1/3., 1/3., 1/3.};
 
         for (int i = 0; i < GenotypeLength; i++) {
             values[i] = (rand.nextDouble() - 0.5) * 10;
             stepSize[i] = rand.nextDouble() + 0.5;
         }
 
-        return new Genotype(values, stepSize);
+        return new Genotype(values, stepSize, migrationPreference);
     }
 
     public List<String> Log()

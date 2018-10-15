@@ -17,6 +17,7 @@ public class IslandParameters
     public double MutationChance;
     public double CrossoverChance;
     public double LearningRate;
+    public int MigrationCount = 3;
 
     public IslandParameters(int tournamentSize, double mutationChance, int elitistSurvivors, double crossoverChance, double learningRate)
     {

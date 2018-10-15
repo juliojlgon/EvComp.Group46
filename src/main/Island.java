@@ -127,4 +127,19 @@ public class Island {
 
         return header;
     }
+
+    public double[] getCentroid()
+    {
+        double[] centroid = new double[10];
+
+        for (Individual ind: IslandPopulation)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                centroid[i] += ind.Genes.Values[i] / IslandPopulation.size();
+            }
+        }
+
+        return centroid;
+    }
 }

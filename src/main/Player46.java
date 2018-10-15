@@ -14,7 +14,7 @@ import java.util.Random;
 public class Player46 implements ContestSubmission
 {
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
-	private static final int number_of_runs = 40;
+	private static final int number_of_runs = 100;
 	private static final boolean WithLogging = false;
 
 	Random rnd_;
@@ -37,56 +37,46 @@ public class Player46 implements ContestSubmission
 		BufferedReader processOutput = new BufferedReader(isr);
 		BufferedWriter processInput = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
 
-		Logger log = new Logger("ParamTuning");
+		Logger log = new Logger("DistanceMigration");
 		List<String> logHeader = new ArrayList<>();
-		logHeader.add("MutationChance");
-		logHeader.add("CrossoverChance");
-		logHeader.add("LearningRate");
-		logHeader.add("AverageScore");
+		logHeader.add("RunNumber/Seed");
+		logHeader.add("Score");
 		log.AddRow(logHeader);
 
 		String function = "SchaffersEvaluation";
 		String output;
 
-		//for (double mutationChance = 0.85; mutationChance <= 0.96; mutationChance += 0.05) {
-		//	for (double crossoverChance = 0.65; crossoverChance <= 0.76; crossoverChance += 0.05)
-		//		for (int tournamentSize = 2; tournamentSize < 3; tournamentSize += 1)
-		//			for (double learningRate = 0.45; learningRate <= 0.61; learningRate += 0.05)
-		//			{
-						double avgScore = 0;
-						for (int run = 0; run < number_of_runs; run++) {
-							String currentDir = System.getProperty("user.dir");
+		double avgScore = 0;
+		for (int run = 0; run < number_of_runs; run++) {
+			String currentDir = System.getProperty("user.dir");
 
-							String command = String.format("java -Djava.library.path=%s/files -Dfile.encoding=UTF-8 -jar %s/files/testrun.jar -submission=main.Player46 -evaluation=%s -nosec -seed=%d",
-									currentDir,
-									currentDir,
-									function,
-									run);
+			String command = String.format("java -Djava.library.path=%s/files -Dfile.encoding=UTF-8 -jar %s/files/testrun.jar -submission=main.Player46 -evaluation=%s -nosec -seed=%d",
+					currentDir,
+					currentDir,
+					function,
+					run);
 
-							processInput.write(command);
-							processInput.newLine();
-							processInput.flush();
+			processInput.write(command);
+			processInput.newLine();
+			processInput.flush();
 
-							int linesRead = 0;
-							double score;
+			int linesRead = 0;
+			double score;
 
-							while (linesRead < 2 && (output = processOutput.readLine()) != null) {
-								if (linesRead == 0) {
-									score = Double.parseDouble(output.substring(6));
-									avgScore += score;
-								}
-								linesRead++;
-							}
-						}
+			while (linesRead < 2 && (output = processOutput.readLine()) != null) {
+				if (linesRead == 0) {
+					score = Double.parseDouble(output.substring(6));
+					avgScore += score;
 
-						List<String> result = new ArrayList<>();
-						//result.add(Double.toString(mutationChance));
-						//result.add(Double.toString(crossoverChance));
-						//result.add(Double.toString(learningRate));
-						result.add(Double.toString(avgScore / number_of_runs));
-						log.AddRow(result);
-						log.Print(result);
-					//}
+					List<String> result = new ArrayList<>();
+					result.add(Integer.toString(run));
+					result.add(Double.toString(score));
+					log.AddRow(result);
+					log.Print(result);
+				}
+				linesRead++;
+			}
+		}
 
 		processInput.write("exit");
 		processInput.newLine();
@@ -94,7 +84,7 @@ public class Player46 implements ContestSubmission
 
 		processInput.close();
 		processOutput.close();
-		//log.WriteLog();
+		log.WriteLog();
 	}
 
 	public void setSeed(long seed)
@@ -158,7 +148,7 @@ public class Player46 implements ContestSubmission
 				epochs++;
 			}
 
-			MigrationPolicies.Migrate(population, island_count);
+			MigrationPolicies.Migrate_MaxDistance(population, island_count);
 			epochs = 0;
 		}
 	}

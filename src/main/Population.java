@@ -70,4 +70,16 @@ public class Population {
 
         return header;
     }
+
+    public List<double[]> getIslandCentroids()
+    {
+        List<double[]> islandCentroids = new ArrayList<>();
+
+        for (Island island: Islands)
+        {
+            islandCentroids.add(island.getCentroid());
+        }
+
+        return islandCentroids;
+    }
 }

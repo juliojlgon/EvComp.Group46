@@ -14,7 +14,7 @@ import java.util.Random;
 public class Player46 implements ContestSubmission
 {
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
-	private static final int number_of_runs = 100;
+	private static final int number_of_runs = 200;
 	private static final boolean WithLogging = false;
 
 	Random rnd_;
@@ -37,7 +37,7 @@ public class Player46 implements ContestSubmission
 		BufferedReader processOutput = new BufferedReader(isr);
 		BufferedWriter processInput = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
 
-		Logger log = new Logger("AdaptiveMigration");
+		Logger log = new Logger("RandomMigration.2.1");
 		List<String> logHeader = new ArrayList<>();
 		logHeader.add("RunNumber.Seed");
 		logHeader.add("Score");
@@ -151,7 +151,7 @@ public class Player46 implements ContestSubmission
 			}
 
 			MigrationPolicies.Migrate(population, island_count);
-			//population.Parameters.LearningRate *= 0.8;
+			population.Epoch++;
 			epochs = 0;
 		}
 	}

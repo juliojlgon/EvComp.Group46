@@ -59,6 +59,24 @@ public class Individual {
         return header;
     }
 
+    public void MutateMigrationProbabilities()
+    {
+        double[] migrationPreference = new double[3];
+        double preferenceSum = 0;
+
+        for (int i = 0; i < 3; i++) {
+            double newPreference = Genes.MigrationPreference[i] + Genes.MigrationPreference[i] * rand.nextGaussian();
+            migrationPreference[i] = newPreference < 0 ? 0 : newPreference;
+            preferenceSum += migrationPreference[i];
+        }
+
+        for (int i = 0; i < 3; i++) {
+            migrationPreference[i] /= preferenceSum;
+        }
+
+        this.Genes.MigrationPreference = migrationPreference;
+    }
+
     static class SortByFitness implements Comparator<Individual>{
 
         @Override

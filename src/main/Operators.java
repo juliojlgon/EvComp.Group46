@@ -137,7 +137,6 @@ public class Operators {
     {
         double[] mutatedGenes = new double[10];
         double[] mutationStepSizes = new double[10];
-        double[] migrationPreference = new double[3];
 
         double gaussianDiceRoll = rand.nextGaussian();
 
@@ -147,18 +146,7 @@ public class Operators {
             mutatedGenes[i] = genotype.Values[i] + mutationStepSizes[i] * rand.nextGaussian();
         }
 
-        double preferenceSum = 0;
-        for (int i = 0; i < 3; i++) {
-            double newPreference = genotype.MigrationPreference[i] + genotype.MigrationPreference[i] * rand.nextGaussian() / 2;
-            migrationPreference[i] = newPreference < 0 ? 0 : newPreference;
-            preferenceSum += migrationPreference[i];
-        }
-
-        for (int i = 0; i < 3; i++) {
-            migrationPreference[i] /= preferenceSum;
-        }
-
-        return new Genotype(mutatedGenes, mutationStepSizes, migrationPreference);
+        return new Genotype(mutatedGenes, mutationStepSizes, genotype.MigrationPreference);
     }
 
     public static void SetRandom(Random rnd_)

@@ -30,7 +30,7 @@ public class Parameters
         this.ElitistSurvivors = bestElitistSurvivors;
         this.LearningRate = bestLearningRate * LearningRate_Global_PropFactor * LearningRate_Global_PropFactor;
         this.MigrationCount = bestMigrationCount;
-        this.MigrationPolicy = main.MigrationPolicy.Distance;
+        this.MigrationPolicy = main.MigrationPolicy.Random;
     }
 
 

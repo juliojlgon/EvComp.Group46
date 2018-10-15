@@ -37,7 +37,7 @@ public class Player46 implements ContestSubmission
 		BufferedReader processOutput = new BufferedReader(isr);
 		BufferedWriter processInput = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
 
-		Logger log = new Logger("RandomMigration.2.1");
+		Logger log = new Logger("AdaptiveMigration.3");
 		List<String> logHeader = new ArrayList<>();
 		logHeader.add("RunNumber.Seed");
 		logHeader.add("Score");

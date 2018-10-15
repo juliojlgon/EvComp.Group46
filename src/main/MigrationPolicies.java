@@ -11,18 +11,19 @@ public class MigrationPolicies
 
     public static Population Migrate(Population population, int island_count)
     {
-        List<Individual> migrationPool = ExtractMigrationPool(population, island_count);
         List<double[]> islandCentroids = population.getIslandCentroids();
+        List<Individual> migrationPool = ExtractMigrationPool(population, island_count);
 
         if(population.Parameters.MigrationPolicy == MigrationPolicy.Adaptive) {
 
             for (int i = 0; i < migrationPool.size(); i++) {
                 Individual ind = migrationPool.get(i);
                 ind.MutateMigrationProbabilities();
+
                 double diceRoll = rand.nextDouble();
 
                 if (diceRoll < ind.Genes.MigrationPreference[0])
-                    population = Migrate_RandomPool(ind, population, island_count);
+                    population = Migrate_RandomPool(ind, population, island_count, i / population.Parameters.MigrationCount);
                 else if (diceRoll < ind.Genes.MigrationPreference[0] + ind.Genes.MigrationPreference[1])
                     population = Migrate_Ring(ind, population, island_count, i / population.Parameters.MigrationCount);
                 else
@@ -32,7 +33,7 @@ public class MigrationPolicies
             switch (population.Parameters.MigrationPolicy) {
                 case Random:
                     for (Individual ind: migrationPool)
-                        population = Migrate_RandomPool(ind, population, island_count);
+                        population = Migrate_RandomPool(ind, population, island_count, migrationPool.indexOf(ind) / population.Parameters.MigrationCount);
                     break;
                 case Ring:
                     for (Individual ind: migrationPool)
@@ -62,7 +63,7 @@ public class MigrationPolicies
         return pool;
     }
 
-    private static Population Migrate_RandomPool(Individual ind, Population population, int island_count)
+    private static Population Migrate_RandomPool(Individual ind, Population population, int island_count, int homeIsland)
     {
         int destinationIsland;
         do{

@@ -9,7 +9,7 @@ public class Parameters
     public static final double LearningRate_Global_PropFactor = 1 / Math.sqrt(individual_dimension);
     private static final int bestTournamentSize = 2;
     private static final double bestMutationChance = .95;
-    private static final double bestLearningRate = 0.6;
+    private static final double bestLearningRate = 0.5;
     private static final double bestCrossoverChance = 0.65;
     private static final int bestElitistSurvivors = 1;
     private static final int bestMigrationCount = 3;
@@ -30,7 +30,7 @@ public class Parameters
         this.ElitistSurvivors = bestElitistSurvivors;
         this.LearningRate = bestLearningRate * LearningRate_Global_PropFactor * LearningRate_Global_PropFactor;
         this.MigrationCount = bestMigrationCount;
-        this.MigrationPolicy = main.MigrationPolicy.Random;
+        this.MigrationPolicy = main.MigrationPolicy.Adaptive;
     }
 
 

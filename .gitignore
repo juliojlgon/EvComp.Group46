@@ -75,6 +75,7 @@ fabric.properties
 !files/contest.jar
 !files/testrun.jar
 !files/opencsv-4.2.jar
+stats
 
 # Log file
 *.log

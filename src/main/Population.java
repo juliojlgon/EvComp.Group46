@@ -5,23 +5,24 @@ public class Population {
 
     public List<Individual> Population;
     public List<Island> Islands;
+    public Parameters Parameters;
 
     public int Epoch;
     private static Random rand;
 
-    public Population(List<Individual> population, List<Individual>[] islands, IslandParameters islandParameters, int islandCount)
+    public Population(List<Individual> population, List<Individual>[] islands, Parameters parameters, int islandCount)
     {
         this.Population = population;
-
+        this.Parameters = parameters;
         this.Epoch = 1;
         this.Islands = new ArrayList<>();
         for (int i = 0; i < islandCount; i++) {
             Collections.sort(islands[i], Individual.Comparator);
-            this.Islands.add(new Island(i, islands[i], islandParameters));
+            this.Islands.add(new Island(i, islands[i], parameters));
         }
     }
 
-    public static Population Create(int population_size, int island_count, IslandParameters islandParameters) {
+    public static Population Create(int population_size, int island_count, Parameters parameters) {
         List<Individual> pop = new ArrayList<Individual>();
 
         List<Individual>[] islands = new List[island_count];
@@ -41,7 +42,7 @@ public class Population {
             islands[diceRoll].add(ind);
         }
 
-        return new Population(pop, islands, islandParameters, island_count);
+        return new Population(pop, islands, parameters, island_count);
     }
 
     public static void SetRandom(Random rnd_)

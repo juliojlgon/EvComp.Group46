@@ -83,7 +83,7 @@ public class Operators {
         return children;
     }
 
-    public static Genotype Mutate(Genotype genotype, IslandParameters parameters)
+    public static Genotype Mutate(Genotype genotype, Parameters parameters)
     {
         double[] mutatedGenes = new double[10];
         double[] mutationStepSizes = new double[10];

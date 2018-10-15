@@ -3,7 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IslandParameters
+public class Parameters
 {
     private static final int individual_dimension = 10;
     public static final double LearningRate_Global_PropFactor = 1 / Math.sqrt(individual_dimension);
@@ -11,33 +11,28 @@ public class IslandParameters
     private static final double bestMutationChance = .95;
     private static final double bestLearningRate = 0.6;
     private static final double bestCrossoverChance = 0.65;
+    private static final int bestElitistSurvivors = 1;
+    private static final int bestMigrationCount = 3;
 
     public int TournamentSize;
     public int ElitistSurvivors;
     public double MutationChance;
     public double CrossoverChance;
     public double LearningRate;
-    public int MigrationCount = 3;
+    public int MigrationCount;
+    public MigrationPolicy MigrationPolicy;
 
-    public IslandParameters(int tournamentSize, double mutationChance, int elitistSurvivors, double crossoverChance, double learningRate)
+    public Parameters()
     {
         this.TournamentSize = bestTournamentSize;
         this.MutationChance = bestMutationChance;
         this.CrossoverChance = bestCrossoverChance;
-        this.ElitistSurvivors = 1;
-        this.LearningRate = learningRate * LearningRate_Global_PropFactor;
+        this.ElitistSurvivors = bestElitistSurvivors;
+        this.LearningRate = bestLearningRate * LearningRate_Global_PropFactor * LearningRate_Global_PropFactor;
+        this.MigrationCount = bestMigrationCount;
+        this.MigrationPolicy = main.MigrationPolicy.Distance;
     }
 
-    public static IslandParameters GetBestIsland(){
-        int tournamentSize = bestTournamentSize;
-        double mutationChance = bestMutationChance;
-        double crossoverChance = bestCrossoverChance;
-        int elitistSurvivors = 1;
-        double learningRate = bestLearningRate * LearningRate_Global_PropFactor;
-
-
-        return new IslandParameters(tournamentSize, mutationChance, elitistSurvivors, crossoverChance, learningRate);
-    }
 
     public List<String> Log()
     {

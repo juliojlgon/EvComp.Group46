@@ -14,7 +14,7 @@ import java.util.Random;
 public class Player46 implements ContestSubmission
 {
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
-	private static final int number_of_runs = 100;
+	private static final int number_of_runs = 42;
 	private static final boolean WithLogging = false;
 
 	Random rnd_;
@@ -28,7 +28,7 @@ public class Player46 implements ContestSubmission
 		rnd_ = new Random();
 	}
 
-	public static void main(String args[]) throws IOException {
+	public static void main(String args[]) throws IOException, InterruptedException {
 		ProcessBuilder term = new ProcessBuilder("/bin/bash");
 		Process p = term.start();
 
@@ -37,14 +37,17 @@ public class Player46 implements ContestSubmission
 		BufferedReader processOutput = new BufferedReader(isr);
 		BufferedWriter processInput = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
 
-		Logger log = new Logger("DistanceMigration");
+		Logger log = new Logger("MigrationSweep");
 		List<String> logHeader = new ArrayList<>();
-		logHeader.add("RunNumber/Seed");
-		logHeader.add("Score");
+		logHeader.add("MigrationPolicy");
+		logHeader.add("MigrantCount");
+		logHeader.add("AvgScore");
 		log.AddRow(logHeader);
 
 		String function = "SchaffersEvaluation";
 		String output;
+
+		String[] policies = new String[]{"Random", "Ring", "Distance"};
 
 		double avgScore = 0;
 		for (int run = 0; run < number_of_runs; run++) {
@@ -119,11 +122,11 @@ public class Player46 implements ContestSubmission
 	public void run()
 	{
 		SetRandom();
-		IslandParameters islandParameters = IslandParameters.GetBestIsland();//GetIslandParameters();
+		Parameters parameters = new Parameters();// GetParameters(); //Parameters.GetBestIsland();
 		Logger islandLog = new Logger("IslandEvolution" + sdf.format(new Timestamp(System.currentTimeMillis())));
 
 		Population population = Population
-				.Create(population_size, island_count, islandParameters);
+				.Create(population_size, island_count, parameters);
 
 		islandLog.AddRow(population.getLogHeader());
 		islandLog.AddRows(population.GetGenerationLog());
@@ -148,20 +151,22 @@ public class Player46 implements ContestSubmission
 				epochs++;
 			}
 
-			MigrationPolicies.Migrate_MaxDistance(population, island_count);
+			MigrationPolicies.Migrate(population, island_count);
+			//population.Parameters.LearningRate *= 0.8;
 			epochs = 0;
 		}
 	}
 
-	private IslandParameters GetIslandParameters()
+	private Parameters GetParameters()
 	{
-		int tournamentSize = Integer.parseInt(System.getProperty(("ts")));
-		double crossoverChance = Double.valueOf(System.getProperty(("cc")));
-		double mutationChance = Double.valueOf(System.getProperty("mc"));
-		double learningRate = Double.valueOf(System.getProperty("lr"));
-		int elites = 1;
+		//int tournamentSize = Integer.parseInt(System.getProperty(("ts")));
+		//double crossoverChance = Double.valueOf(System.getProperty(("cc")));
+		//double mutationChance = Double.valueOf(System.getProperty("mc"));
+		//double learningRate = Double.valueOf(System.getProperty("lr"));
+		String migrationPolicy = System.getProperty("mp");
+		int migrantCount = Integer.valueOf(System.getProperty("mn"));
 
-		return new IslandParameters(tournamentSize, mutationChance, elites, crossoverChance, learningRate);
+		return new Parameters();
 	}
 
 	private void SetRandom()

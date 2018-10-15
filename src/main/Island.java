@@ -9,16 +9,16 @@ public class Island {
     public int IslandIndex;
     public int Generation;
     public List<Individual> IslandPopulation;
-    public IslandParameters IslandParameters;
+    public Parameters Parameters;
 
     private static Random rand;
 
-    public Island(int islandIndex, List<Individual> island, IslandParameters islandParameters)
+    public Island(int islandIndex, List<Individual> island, Parameters parameters)
     {
         this.IslandIndex = islandIndex;
         this.Generation = 1;
         this.IslandPopulation = island;
-        this.IslandParameters = islandParameters;
+        this.Parameters = parameters;
     }
 
     public static void SetRandom(Random rnd_)
@@ -34,11 +34,11 @@ public class Island {
         pool.addAll(children);
         Collections.sort(pool, Individual.Comparator);
 
-        List<Individual> elites = IslandParameters.ElitistSurvivors != 0 ?
-                pool.subList(0, IslandParameters.ElitistSurvivors) :
+        List<Individual> elites = Parameters.ElitistSurvivors != 0 ?
+                pool.subList(0, Parameters.ElitistSurvivors) :
                 new ArrayList<>();
 
-        List<Individual> survivors = Operators.TournamentSelect(pool.subList(IslandParameters.ElitistSurvivors, pool.size()), IslandParameters.TournamentSize, IslandPopulation.size() - elites.size());
+        List<Individual> survivors = Operators.TournamentSelect(pool.subList(Parameters.ElitistSurvivors, pool.size()), Parameters.TournamentSize, IslandPopulation.size() - elites.size());
         survivors.addAll(elites);
         Collections.sort(survivors, Individual.Comparator);
 
@@ -52,33 +52,33 @@ public class Island {
         while(allChildren.size() < (IslandPopulation.size()))
         {
 
-            Individual mom = Operators.TournamentSelect(IslandPopulation, IslandParameters.TournamentSize,1).get(0);
+            Individual mom = Operators.TournamentSelect(IslandPopulation, Parameters.TournamentSize,1).get(0);
             Individual dad;
             do {
-                dad = Operators.TournamentSelect(IslandPopulation, IslandParameters.TournamentSize,1).get(0);
+                dad = Operators.TournamentSelect(IslandPopulation, Parameters.TournamentSize,1).get(0);
             } while(mom.equals(dad));
 
             double crossoverDiceRoll = rand.nextDouble();
             List<Individual> newChildren = new ArrayList<>();
 
-            if(crossoverDiceRoll < IslandParameters.CrossoverChance)
+            if(crossoverDiceRoll < Parameters.CrossoverChance)
             { //do whole arithmetic xover
                 newChildren = Operators.BlendXover(mom, dad);
             }
 
             double mutationDiceRoll = rand.nextDouble();
 
-            if(mutationDiceRoll < IslandParameters.MutationChance)
+            if(mutationDiceRoll < Parameters.MutationChance)
             {
-                Individual mutantChild = mom.Mutate(IslandParameters);
+                Individual mutantChild = mom.Mutate(Parameters);
                 newChildren.add(mutantChild);
             }
 
             mutationDiceRoll = rand.nextDouble();
 
-            if(mutationDiceRoll < IslandParameters.MutationChance)
+            if(mutationDiceRoll < Parameters.MutationChance)
             {
-                Individual mutantChild = dad.Mutate(IslandParameters);
+                Individual mutantChild = dad.Mutate(Parameters);
                 newChildren.add(mutantChild);
             }
 
@@ -111,7 +111,7 @@ public class Island {
 
         islandMeta.add(Integer.toString(IslandIndex));
         islandMeta.add(Integer.toString(Generation));
-        islandMeta.addAll(IslandParameters.Log());
+        islandMeta.addAll(Parameters.Log());
 
         return islandMeta;
     }
@@ -123,7 +123,7 @@ public class Island {
         header.addAll(Individual.getLogHeader());
         header.add("IslandIndex");
         header.add("Generation");
-        header.addAll(main.IslandParameters.getHeaderLog());
+        header.addAll(main.Parameters.getHeaderLog());
 
         return header;
     }

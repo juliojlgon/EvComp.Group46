@@ -33,7 +33,7 @@ public class Individual {
         eval = evaluation_;
     }
 
-    public Individual Mutate(IslandParameters parameters)
+    public Individual Mutate(Parameters parameters)
     {
         Genotype mutatedGenotype = Operators.Mutate(this.Genes, parameters);
 

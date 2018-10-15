@@ -1,7 +1,6 @@
 package main;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.Map.Entry.comparingByValue;
 
@@ -10,12 +9,26 @@ public class MigrationPolicies
     private static Random rand;
 
 
-    public static Population Migrate_RandomPool(Population population, int island_count)
+    public static Population Migrate(Population population, int island_count)
+    {
+        switch (population.Parameters.MigrationPolicy) {
+            case Random:
+                return Migrate_RandomPool(population, island_count);
+            case Ring:
+                return Migrate_Ring(population, island_count);
+            case Distance:
+                return Migrate_MaxDistance(population, island_count);
+            default:
+                return null;
+        }
+    }
+
+    private static Population Migrate_RandomPool(Population population, int island_count)
     {
         List<Individual> pool = new ArrayList<>();
 
         for (Island island: population.Islands){
-            List<Individual> migrants = Operators.TournamentSelect(island.IslandPopulation, 1, island.IslandParameters.MigrationCount);
+            List<Individual> migrants = Operators.TournamentSelect(island.IslandPopulation, 1, island.Parameters.MigrationCount);
             island.IslandPopulation.removeAll(migrants);
             pool.addAll(migrants);
         }
@@ -34,11 +47,11 @@ public class MigrationPolicies
         return population;
     }
 
-    public static Population Migrate_MaxDistance(Population population, int island_count) {
+    private static Population Migrate_MaxDistance(Population population, int island_count) {
         List<Individual> pool = new ArrayList<>();
 
         for (Island island : population.Islands) {
-            List<Individual> migrants = Operators.TournamentSelect(island.IslandPopulation, 1, island.IslandParameters.MigrationCount);
+            List<Individual> migrants = Operators.TournamentSelect(island.IslandPopulation, 1, island.Parameters.MigrationCount);
             island.IslandPopulation.removeAll(migrants);
             pool.addAll(migrants);
         }
@@ -93,20 +106,19 @@ public class MigrationPolicies
         return Math.sqrt(distance);
     }
 
-
-    public static Population Migrate_Ring(Population population, int island_count)
+    private static Population Migrate_Ring(Population population, int island_count)
     {
         List<Individual> pool = new ArrayList<>();
 
         for (Island island: population.Islands){
-            List<Individual> migrants = Operators.TournamentSelect(island.IslandPopulation, 1, island.IslandParameters.MigrationCount);
+            List<Individual> migrants = Operators.TournamentSelect(island.IslandPopulation, 1, island.Parameters.MigrationCount);
             island.IslandPopulation.removeAll(migrants);
             pool.addAll(migrants);
         }
 
         for (int i = 0; i < pool.size(); i++)
         {
-            int migrationIsland = ((i/3) + 1) % 4;
+            int migrationIsland = ((i/population.Parameters.MigrationCount) + 1) % 4;
             population.Islands.get(migrationIsland).IslandPopulation.add(pool.get(i));
         }
 
@@ -118,4 +130,5 @@ public class MigrationPolicies
     {
         rand = rnd_;
     }
+
 }

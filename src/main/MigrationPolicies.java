@@ -36,7 +36,7 @@ public class MigrationPolicies
                             break;
                         }
                     } else if (d2-- == 0) {
-                        population = Migrate_MaxDistance(ind, population, island_count, islandCentroids);
+                        population = Migrate_NoCanMigrateSir(ind, population, island_count, i / population.Parameters.MigrationCount);
                         break;
                     }
                 } while (true);
@@ -58,6 +58,13 @@ public class MigrationPolicies
                 default: break;
             }
         }
+
+        return population;
+    }
+
+    private static Population Migrate_NoCanMigrateSir(Individual ind, Population population, int island_count, int homeIsland)
+    {
+        population.Islands.get(homeIsland).IslandPopulation.add(ind);
 
         return population;
     }

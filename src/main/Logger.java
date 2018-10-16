@@ -48,7 +48,7 @@ public class Logger {
 
     private String GetFilepath()
     {
-        return System.getProperty("user.dir") + "/../stats/" + LogName + ".csv";
+        return System.getProperty("user.dir") + "/stats/baseRuns/" + LogName + ".csv";
     }
 
     @Override

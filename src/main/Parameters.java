@@ -12,6 +12,7 @@ public class Parameters
     private static final double bestLearningRate = 0.5;
     private static final double bestCrossoverChance = 0.65;
     private static final int bestElitistSurvivors = 1;
+    private static final int bestIslandSize = 25;
     private static final int bestMigrationCount = 3;
 
     public int TournamentSize;
@@ -20,6 +21,7 @@ public class Parameters
     public double CrossoverChance;
     public double LearningRate;
     public int MigrationCount;
+    public int IslandSize;
     public MigrationPolicy MigrationPolicy;
 
     public Parameters()
@@ -30,6 +32,7 @@ public class Parameters
         this.ElitistSurvivors = bestElitistSurvivors;
         this.LearningRate = bestLearningRate * LearningRate_Global_PropFactor * LearningRate_Global_PropFactor;
         this.MigrationCount = bestMigrationCount;
+        this.IslandSize = bestIslandSize;
         this.MigrationPolicy = main.MigrationPolicy.Adaptive;
     }
 

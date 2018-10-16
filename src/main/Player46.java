@@ -37,7 +37,7 @@ public class Player46 implements ContestSubmission
 		BufferedReader processOutput = new BufferedReader(isr);
 		BufferedWriter processInput = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
 
-		Logger log = new Logger("AdaptiveMigration.4.1");
+		Logger log = new Logger("AdaptiveMigration.46");
 		List<String> logHeader = new ArrayList<>();
 		logHeader.add("RunNumber.Seed");
 		logHeader.add("Score");
@@ -52,8 +52,9 @@ public class Player46 implements ContestSubmission
 		for (int run = 0; run < number_of_runs; run++) {
 			String currentDir = System.getProperty("user.dir");
 
-			String command = String.format("java -Djava.library.path=%s/files -Dfile.encoding=UTF-8 -jar %s/files/testrun.jar -submission=main.Player46 -evaluation=%s -nosec -seed=%d",
+			String command = String.format("java -Djava.library.path=%s/files -Dfile.encoding=UTF-8 -Dsd=%d -jar %s/files/testrun.jar -submission=main.Player46 -evaluation=%s -nosec -seed=%d",
 					currentDir,
+					run,
 					currentDir,
 					function,
 					run);
@@ -122,7 +123,8 @@ public class Player46 implements ContestSubmission
 	{
 		SetRandom();
 		Parameters parameters = new Parameters();// GetParameters(); //Parameters.GetBestIsland();
-		Logger islandLog = new Logger("IslandEvolution" + sdf.format(new Timestamp(System.currentTimeMillis())));
+		String logCount = System.getProperty("sd");
+		Logger islandLog = new Logger("AdaptiveMigration.N." + logCount);
 
 		Population population = Population
 				.Create(population_size, island_count, parameters);

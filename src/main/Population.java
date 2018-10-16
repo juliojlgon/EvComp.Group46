@@ -67,7 +67,7 @@ public class Population {
         List<String> header = new ArrayList<>();
 
         header.addAll(Island.getLogHeader());
-        header.add("Epoch");
+        //header.add("Epoch");
 
         return header;
     }

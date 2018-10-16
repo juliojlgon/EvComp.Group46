@@ -58,12 +58,12 @@ public class Genotype {
     {
         List<String> log = new ArrayList<>();
 
-        for (int i = 0; i < GenotypeLength; i++) {
-            log.add(Double.toString(Values[i]));
-        }
-        for (int i = 0; i < GenotypeLength; i++) {
-            log.add(Double.toString(MutationStepSize[i]));
-        }
+        //for (int i = 0; i < GenotypeLength; i++) {
+        //    log.add(Double.toString(Values[i]));
+        //}
+        //for (int i = 0; i < GenotypeLength; i++) {
+        //    log.add(Double.toString(MutationStepSize[i]));
+        //}
         for (int i = 0; i < 3; i++) {
             log.add(Double.toString(MigrationPreference[i]));
         }
@@ -75,12 +75,12 @@ public class Genotype {
     {
         List<String> header = new ArrayList<>();
 
-        for (int i = 0; i < GenotypeLength; i++) {
-            header.add("X_" + i);
-        }
-        for (int i = 0; i < GenotypeLength; i++) {
-            header.add("MutStepSize_" + i);
-        }
+        //for (int i = 0; i < GenotypeLength; i++) {
+        //    header.add("X_" + i);
+        //}
+        //for (int i = 0; i < GenotypeLength; i++) {
+        //    header.add("MutStepSize_" + i);
+        //}
         header.add("MigPref_Random");
         header.add("MigPref_Ring");
         header.add("MigPref_Distance");

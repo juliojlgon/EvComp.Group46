@@ -38,7 +38,7 @@ public class Island {
                 pool.subList(0, Parameters.ElitistSurvivors) :
                 new ArrayList<>();
 
-        List<Individual> survivors = Operators.TournamentSelect(pool.subList(Parameters.ElitistSurvivors, pool.size()), Parameters.TournamentSize, IslandPopulation.size() - elites.size());
+        List<Individual> survivors = Operators.TournamentSelect(pool.subList(Parameters.ElitistSurvivors, pool.size()), Parameters.TournamentSize, Parameters.IslandSize - elites.size());
         survivors.addAll(elites);
         Collections.sort(survivors, Individual.Comparator);
 
@@ -97,7 +97,7 @@ public class Island {
         {
             List<String> indLog = ind.Log();
             indLog.addAll(metaIslandLog);
-            indLog.add(epoch);
+            //indLog.add(epoch);
 
             log.add(indLog.toArray(new String[0]));
         }
@@ -111,7 +111,7 @@ public class Island {
 
         islandMeta.add(Integer.toString(IslandIndex));
         islandMeta.add(Integer.toString(Generation));
-        islandMeta.addAll(Parameters.Log());
+        //islandMeta.addAll(Parameters.Log());
 
         return islandMeta;
     }
@@ -123,7 +123,7 @@ public class Island {
         header.addAll(Individual.getLogHeader());
         header.add("IslandIndex");
         header.add("Generation");
-        header.addAll(main.Parameters.getHeaderLog());
+        //header.addAll(main.Parameters.getHeaderLog());
 
         return header;
     }

@@ -65,7 +65,8 @@ public class Individual {
         double preferenceSum = 0;
 
         for (int i = 0; i < 3; i++) {
-            double newPreference = Genes.MigrationPreference[i] + Genes.MigrationPreference[i] * rand.nextGaussian();
+            double newPreference = Genes.MigrationPreference[i] + Genes.MigrationPreference[i] * rand.nextGaussian() / 2;
+            //double newPreference = Genes.MigrationPreference[i] * Math.exp(0.3 * rand.nextGaussian());
             migrationPreference[i] = newPreference < 0 ? 0 : newPreference;
             preferenceSum += migrationPreference[i];
         }

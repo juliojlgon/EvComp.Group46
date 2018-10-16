@@ -15,7 +15,7 @@ public class Player46 implements ContestSubmission
 {
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
 	private static final int number_of_runs = 200;
-	private static final boolean WithLogging = false;
+	private static final boolean WithLogging = true;
 
 	Random rnd_;
 	ContestEvaluation evaluation_;
@@ -37,7 +37,7 @@ public class Player46 implements ContestSubmission
 		BufferedReader processOutput = new BufferedReader(isr);
 		BufferedWriter processInput = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
 
-		Logger log = new Logger("AdaptiveMigration.3");
+		Logger log = new Logger("AdaptiveMigration.4.1");
 		List<String> logHeader = new ArrayList<>();
 		logHeader.add("RunNumber.Seed");
 		logHeader.add("Score");
@@ -91,7 +91,7 @@ public class Player46 implements ContestSubmission
 
 	public void setSeed(long seed)
 	{
-		rnd_.setSeed(seed);
+		//rnd_.setSeed(seed);
 	}
 
 	public void setEvaluation(ContestEvaluation evaluation)

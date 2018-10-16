@@ -64,6 +64,9 @@ public class Genotype {
         for (int i = 0; i < GenotypeLength; i++) {
             log.add(Double.toString(MutationStepSize[i]));
         }
+        for (int i = 0; i < 3; i++) {
+            log.add(Double.toString(MigrationPreference[i]));
+        }
 
         return log;
     }
@@ -78,6 +81,9 @@ public class Genotype {
         for (int i = 0; i < GenotypeLength; i++) {
             header.add("MutStepSize_" + i);
         }
+        header.add("MigPref_Random");
+        header.add("MigPref_Ring");
+        header.add("MigPref_Distance");
 
         return header;
     }

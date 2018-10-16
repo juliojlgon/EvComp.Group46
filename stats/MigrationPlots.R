@@ -5,12 +5,12 @@ require(plyr)
 data1 <- read.csv("RandomMigration.2.3.csv")
 data2 <- read.csv("RingMigration.2.3.csv")
 data3 <- read.csv("DistanceMigration.3.csv")
-data4 <- read.csv("AdaptiveMigration.3.csv")
+data4 <- read.csv("AdaptiveMigration.4.csv")
 
 data1$MigrationPolicy <- "Random"
 data2$MigrationPolicy <- "Ring"
 data3$MigrationPolicy <- "Distance"
-data4$MigrationPolicy <- "Adaptive"
+data4$MigrationPolicy <- "Adaptive4"
 
 all <- rbind(data1, data2, data3, data4)
 cdat <- ddply(all, "MigrationPolicy", summarise, Score.mean=mean(Score))

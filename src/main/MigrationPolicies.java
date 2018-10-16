@@ -20,14 +20,26 @@ public class MigrationPolicies
                 Individual ind = migrationPool.get(i);
                 ind.MutateMigrationProbabilities();
 
-                double diceRoll = rand.nextDouble();
+                byte d0 = 2, d1 = 2, d2 = 2;
 
-                if (diceRoll < ind.Genes.MigrationPreference[0])
-                    population = Migrate_RandomPool(ind, population, island_count, i / population.Parameters.MigrationCount);
-                else if (diceRoll < ind.Genes.MigrationPreference[0] + ind.Genes.MigrationPreference[1])
-                    population = Migrate_Ring(ind, population, island_count, i / population.Parameters.MigrationCount);
-                else
-                    population = Migrate_MaxDistance(ind, population, island_count, islandCentroids);
+                do {
+                    double diceRoll = rand.nextDouble();
+
+                    if (diceRoll < ind.Genes.MigrationPreference[0]) {
+                        if (d0-- == 0) {
+                            population = Migrate_RandomPool(ind, population, island_count, i / population.Parameters.MigrationCount);
+                            break;
+                        }
+                    } else if (diceRoll < ind.Genes.MigrationPreference[0] + ind.Genes.MigrationPreference[1]) {
+                        if (d1-- == 0) {
+                            population = Migrate_Ring(ind, population, island_count, i / population.Parameters.MigrationCount);
+                            break;
+                        }
+                    } else if (d2-- == 0) {
+                        population = Migrate_MaxDistance(ind, population, island_count, islandCentroids);
+                        break;
+                    }
+                } while (true);
             }
         } else {
             switch (population.Parameters.MigrationPolicy) {

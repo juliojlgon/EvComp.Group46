@@ -14,7 +14,7 @@ import java.util.Random;
 public class Player46 implements ContestSubmission
 {
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
-	private static final int number_of_runs = 200;
+	private static final int number_of_runs = 500;
 	private static final boolean WithLogging = true;
 
 	Random rnd_;
@@ -37,7 +37,7 @@ public class Player46 implements ContestSubmission
 		BufferedReader processOutput = new BufferedReader(isr);
 		BufferedWriter processInput = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
 
-		Logger log = new Logger("AdaptiveMigration.46");
+		Logger log = new Logger("AdaptiveMigration.Big");
 		List<String> logHeader = new ArrayList<>();
 		logHeader.add("RunNumber.Seed");
 		logHeader.add("Score");
@@ -124,7 +124,7 @@ public class Player46 implements ContestSubmission
 		SetRandom();
 		Parameters parameters = new Parameters();// GetParameters(); //Parameters.GetBestIsland();
 		String logCount = System.getProperty("sd");
-		Logger islandLog = new Logger("AdaptiveMigration.N." + logCount);
+		Logger islandLog = new Logger("AdaptiveMigration5." + logCount);
 
 		Population population = Population
 				.Create(population_size, island_count, parameters);

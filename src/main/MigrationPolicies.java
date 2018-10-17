@@ -16,6 +16,7 @@ public class MigrationPolicies
 
         if(population.Parameters.MigrationPolicy == MigrationPolicy.Adaptive) {
 
+            List<Individual> randomMigrants = new ArrayList<>();
             for (int i = 0; i < migrationPool.size(); i++) {
                 Individual ind = migrationPool.get(i);
                 ind.MutateMigrationProbabilities();
@@ -27,7 +28,7 @@ public class MigrationPolicies
 
                     if (diceRoll < ind.Genes.MigrationPreference[0]) {
                         if (d0-- == 0) {
-                            population = Migrate_RandomPool(ind, population, island_count, i / population.Parameters.MigrationCount);
+                            randomMigrants.add(ind);
                             break;
                         }
                     } else if (diceRoll < ind.Genes.MigrationPreference[0] + ind.Genes.MigrationPreference[1]) {
@@ -36,11 +37,17 @@ public class MigrationPolicies
                             break;
                         }
                     } else if (d2-- == 0) {
-                        population = Migrate_NoCanMigrateSir(ind, population, island_count, i / population.Parameters.MigrationCount);
+                        population = Migrate_MaxDistance(ind, population, island_count, islandCentroids);
                         break;
                     }
                 } while (true);
             }
+
+            for (Individual ind: randomMigrants)
+            {
+                population = Migrate_RandomPool(ind, population, island_count, 0);
+            }
+
         } else {
             switch (population.Parameters.MigrationPolicy) {
                 case Random:
@@ -117,12 +124,7 @@ public class MigrationPolicies
             sorted.add(entry.getKey());
         }
 
-        int distanceIndex = 0;
-        int destinationIsland;
-
-        do {
-            destinationIsland = sorted.get(distanceIndex++);
-        } while (population.Islands.get(destinationIsland).IslandPopulation.size() >= 25);
+        int destinationIsland= sorted.get(0);
 
         population.Islands.get(destinationIsland).IslandPopulation.add(ind);
 

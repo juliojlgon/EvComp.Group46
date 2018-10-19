@@ -61,17 +61,17 @@ public class Individual {
 
     public void MutateMigrationProbabilities()
     {
-        double[] migrationPreference = new double[3];
+        double[] migrationPreference = new double[4];
         double preferenceSum = 0;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             double newPreference = Genes.MigrationPreference[i] + Genes.MigrationPreference[i] * rand.nextGaussian() / 2;
             //double newPreference = Genes.MigrationPreference[i] * Math.exp(0.3 * rand.nextGaussian());
             migrationPreference[i] = newPreference < 0 ? 0 : newPreference;
             preferenceSum += migrationPreference[i];
         }
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             migrationPreference[i] /= preferenceSum;
         }
 

@@ -37,7 +37,7 @@ public class Player46 implements ContestSubmission
 		BufferedReader processOutput = new BufferedReader(isr);
 		BufferedWriter processInput = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
 
-		Logger log = new Logger("AdaptiveMigration.Big");
+		Logger log = new Logger("AdaptiveMigrationN.Big");
 		List<String> logHeader = new ArrayList<>();
 		logHeader.add("RunNumber.Seed");
 		logHeader.add("Score");
@@ -124,7 +124,7 @@ public class Player46 implements ContestSubmission
 		SetRandom();
 		Parameters parameters = new Parameters();// GetParameters(); //Parameters.GetBestIsland();
 		String logCount = System.getProperty("sd");
-		Logger islandLog = new Logger("AdaptiveMigration5." + logCount);
+		Logger islandLog = new Logger("AdaptiveMigration5N." + logCount);
 
 		Population population = Population
 				.Create(population_size, island_count, parameters);

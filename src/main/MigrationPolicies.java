@@ -21,7 +21,7 @@ public class MigrationPolicies
                 Individual ind = migrationPool.get(i);
                 ind.MutateMigrationProbabilities();
 
-                byte d0 = 2, d1 = 2, d2 = 2;
+                byte d0 = 2, d1 = 2, d2 = 2, d3 = 2;
 
                 do {
                     double diceRoll = rand.nextDouble();
@@ -36,8 +36,13 @@ public class MigrationPolicies
                             population = Migrate_Ring(ind, population, island_count, i / population.Parameters.MigrationCount);
                             break;
                         }
-                    } else if (d2-- == 0) {
-                        population = Migrate_MaxDistance(ind, population, island_count, islandCentroids);
+                    } else if (diceRoll < ind.Genes.MigrationPreference[0] + ind.Genes.MigrationPreference[1] + ind.Genes.MigrationPreference[2]) {
+                        if (d2-- == 0) {
+                            population = Migrate_MaxDistance(ind, population, island_count, islandCentroids);
+                            break;
+                        }
+                    } else if (d3-- == 0) {
+                        population = Migrate_NoCanMigrateSir(ind, population, island_count, i / population.Parameters.MigrationCount);
                         break;
                     }
                 } while (true);
@@ -124,7 +129,7 @@ public class MigrationPolicies
             sorted.add(entry.getKey());
         }
 
-        int destinationIsland= sorted.get(0);
+        int destinationIsland = sorted.get(0);
 
         population.Islands.get(destinationIsland).IslandPopulation.add(ind);
 

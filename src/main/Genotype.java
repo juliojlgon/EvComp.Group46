@@ -44,7 +44,7 @@ public class Genotype {
     public static Genotype CreateRandom() {
         double[] values = new double[GenotypeLength];
         double[] stepSize = new double[GenotypeLength];
-        double[] migrationPreference = new double[]{1/3., 1/3., 1/3.};
+        double[] migrationPreference = new double[]{1/4., 1/4., 1/4., 1/4.};
 
         for (int i = 0; i < GenotypeLength; i++) {
             values[i] = (rand.nextDouble() - 0.5) * 10;
@@ -64,7 +64,7 @@ public class Genotype {
         //for (int i = 0; i < GenotypeLength; i++) {
         //    log.add(Double.toString(MutationStepSize[i]));
         //}
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             log.add(Double.toString(MigrationPreference[i]));
         }
 
@@ -84,6 +84,7 @@ public class Genotype {
         header.add("MigPref_Random");
         header.add("MigPref_Ring");
         header.add("MigPref_Distance");
+        header.add("MigPref_NoMigr");
 
         return header;
     }

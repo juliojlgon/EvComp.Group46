@@ -40,8 +40,8 @@ public class Operators {
         double[] genotype2 = new double[10];
         double[] mutationStepSizes1 = new double[10];
         double[] mutationStepSizes2 = new double[10];
-        double[] migrationPreferences1 = new double[3];
-        double[] migrationPreferences2 = new double[3];
+        double[] migrationPreferences1 = new double[4];
+        double[] migrationPreferences2 = new double[4];
         double bias = 0.5;
 
         for (int i = 0; i < 10; i++) {
@@ -61,7 +61,7 @@ public class Operators {
         double preferenceSum2 = 0;
         double minPreference2 = 1;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             double dist = Math.abs(mom.Genes.MigrationPreference[i] - dad.Genes.MigrationPreference[i]);
             double diceRoll = rand.nextDouble();
 
@@ -76,13 +76,13 @@ public class Operators {
         }
 
         if(minPreference1 < 0){
-            preferenceSum1 += Math.abs(minPreference1)*3;
+            preferenceSum1 += Math.abs(minPreference1)*4;
         } else {minPreference1 = 0;}
         if(minPreference2 < 0){
-            preferenceSum2 += Math.abs(minPreference2)*3;
+            preferenceSum2 += Math.abs(minPreference2)*4;
         } else {minPreference2 = 0;}
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             migrationPreferences1[i] = (migrationPreferences1[i] + Math.abs(minPreference1)) / preferenceSum1;
             migrationPreferences2[i] = (migrationPreferences2[i] + Math.abs(minPreference2)) / preferenceSum2;
         }
